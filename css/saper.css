@@ -1,0 +1,38 @@
+.content {
+    overflow: auto;
+}
+
+#sapper {
+    width: 420px;
+    height: 420px;
+    background-color: lightgreen;
+    margin: auto;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    float: left;
+    text-align: center;
+    line-height: 40px;
+}
+
+.bombInside {
+    background-color: #9F2D47;
+}
+
+#info {
+    margin: 10px auto;
+    width: 410px;
+    border: 1px solid salmon;
+    padding: 5px;
+}
+
+.flag {
+    background-color: lightyellow;
+}
+
+.legend {
+    margin: 5px 0;
+}
