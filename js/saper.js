@@ -33,6 +33,7 @@ var sapperObject = {
     bombsCount: 0,
     flagsCount: 0,
     cellsOpened: 0,
+    bombsArray: [],
     getGameLegend: function() {
         return "<div class='legend'>Left mouse click - open cell. <br> Right mouse click - set/unset flag</div>";
     },
@@ -55,8 +56,9 @@ var sapperObject = {
             var forWidth  = Math.round(Math.random() * (this.width - 1 + 1)) + 1;
 
             var bElem = document.getElementById(forHeight + '_' + forWidth);
-            if (bElem && !bElem.classList.contains('bomb')) {
-                bElem.classList.add('bomb');
+
+            if (bElem && this.bombsArray.indexOf(forHeight + '_' + forWidth) < 0) {
+                this.bombsArray.push(forHeight + '_' + forWidth);
                 this.bombsCount++;
             }
         }
@@ -163,15 +165,14 @@ var sapperObject = {
     cellIsBomb: function(cell, isSiblings) {
         if (cell === null) return false;
 
-        if (cell.className.indexOf('bomb') >= 0) {
-            var allBombs = document.getElementsByClassName('bomb');
-
-            for (var i = 0; i < allBombs.length; i++) {
-                if (!isSiblings && allBombs[i] !== undefined && !allBombs[i].classList.contains('bombInside')) allBombs[i].className = allBombs[i].className + ' bombInside';
-            }
-
+        if (this.bombsArray.indexOf(cell.id) >= 0) {
             if (!isSiblings) {
                 sapperObject.stopEvents();
+
+                for (var i = 0; i < this.bombsArray.length; i++) {
+                    var bombElem = document.getElementById(this.bombsArray[i]);
+                    bombElem.classList.add('bombInside');
+                }
 
                 alert('You lose!');
             }
@@ -180,7 +181,6 @@ var sapperObject = {
         }
     },
     restartGameAction: function(e) {
-        console.log('here');
         window.location.reload();
     },
     cellClickListener: function() {
